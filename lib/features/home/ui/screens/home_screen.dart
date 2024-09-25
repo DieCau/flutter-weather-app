@@ -9,7 +9,7 @@ import 'package:intl/intl.dart';
 import 'package:weather_app/features/home/ui/bloc/weather_bloc/weather_bloc.dart';
 import 'package:weather_app/features/home/ui/widgets/sunrise_widget.dart';
 import 'package:weather_app/features/home/ui/widgets/temp_widget.dart';
-import 'package:weather_app/shared/location/position_bloc/poistion_bloc.dart';
+import 'package:weather_app/shared/location/location_bloc/position_bloc.dart';
 
 class HomeScreen extends StatefulWidget {
   static const name = "home_screen";
@@ -26,7 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) => PoistionBloc()..add(FecthPosition()),
+          create: (context) => PositionBloc()..add(FecthPosition()),
         ),
         BlocProvider(
           create: (context) => WeatherBloc(),
@@ -68,9 +68,9 @@ class HomeViewBloc extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<PoistionBloc, PoistionState>(
+    return BlocListener<PositionBloc, PositionState>(
       listener: (context, state) {
-        if (state is PoistionSuccesState) {
+        if (state is PositionSuccesState) {
           context.read<WeatherBloc>().add(FetchWeather(position: state.position));
         }
       },
